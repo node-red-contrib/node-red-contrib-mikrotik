@@ -1,0 +1,56 @@
+<script type="text/javascript">
+    RED.nodes.registerType('mikrotik',{
+        category: 'function',
+        color: '#E9967A',
+        defaults: {
+            name: {value:""},
+            ip : {value: ""},
+            action: {value:"0"}
+        },
+        credentials: {
+            login: {type:"text"},
+            pass: {type:"password"}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "feed.png",
+        label: function() {
+            return this.name||"mikrotik";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="mikrotik">
+    <div class="form-row">
+        <label for="node-input-ip"><i class="icon-globe"></i> IP</label>
+        <input type="text" id="node-input-ip" placeholder="xxx.xxx.xxx.xxx">
+    </div>
+    <div class="form-row">
+        <label for="node-input-login"><i class="icon-user"></i> Login</label>
+        <input type="text" id="node-input-login" placeholder="login">
+    </div>
+    <div class="form-row">
+        <label for="node-input-pass"><i class="icon-tag"></i> Pass</label>
+        <input type="password" id="node-input-pass" placeholder="password">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-action"><i class="icon-tasks"></i> Action</label>
+        <select id="node-input-action" placeholder="action">
+            <option value="0">Log</option>
+            <option value="1">System resources</option>
+            <option value="2">Connected WiFi</option>
+            <option value="3">Reboot</option>
+            <option value="9">Raw (use msg.payload)</option>
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" class="paletteLabel" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="mikrotik">
+   <p>A node that work with Mikrotik WiFi routers.</p>
+</script>

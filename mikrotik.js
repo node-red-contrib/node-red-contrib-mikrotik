@@ -33,20 +33,20 @@ module.exports = function(RED) {
                 // action = msg.payload;
                 action = '';
                 break;
-
         }
-
 
         this.on('input', function(msg) {
             if (action == '') action = msg.payload;
-            var connection = new mikrotik(ip, login, pass);
+            var connection = mikrotik(ip, login, pass, {debug: 0});
+            connection.on('error', function(err) {
+                node.error("Connection error: " + err);
+            });
+
+
             connection.connect(function(conn) {
-
                 var chan = conn.openChannel();
-
                 chan.write(action, function() {
                     chan.on('done',function(data) {
-
                         var parsed = mikrotik.parseItems(data);
 
                         var pl = [];
@@ -57,8 +57,8 @@ module.exports = function(RED) {
                         msg.payload = pl;
                         node.send(msg);
 
-                        chan.close();
-                        conn.close();
+                        chan.closeOnDone = true;
+                        conn.closeOnDone = true;
 
                     });
                 });

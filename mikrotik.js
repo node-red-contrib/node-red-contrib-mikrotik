@@ -14,7 +14,7 @@ module.exports = function(RED) {
         var ip = node.ip;
         var login = node.credentials.login;
         var pass = node.credentials.pass;
-        var action = '';
+        var action;
 
         switch (parseInt(node.action)) {
             case 0:
@@ -30,13 +30,15 @@ module.exports = function(RED) {
                 action = '/system/reboot';
                 break;
             case 9:
-                action = msg.payload;
+                // action = msg.payload;
+                action = '';
                 break;
 
         }
 
 
         this.on('input', function(msg) {
+            if (action == '') action = msg.payload;
             var connection = new mikrotik(ip, login, pass);
             connection.connect(function(conn) {
 

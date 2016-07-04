@@ -1,7 +1,7 @@
 /**
  * Created by Bladerunner on 11/03/16.
  */
-var mikrotik = require('mikronode');
+var mikrotik = require('mikronode-ng');
 
 module.exports = function(RED) {
     function NodeMikrotik(config) {
@@ -30,40 +30,37 @@ module.exports = function(RED) {
                 action = '/system/reboot';
                 break;
             case 9:
-                // action = msg.payload;
                 action = '';
                 break;
         }
 
+        var connection = null;
+
         this.on('input', function(msg) {
             if (action == '') action = msg.payload;
-            var connection = mikrotik(ip, login, pass, {debug: 0});
-            connection.on('error', function(err) {
-                node.error("Connection error: " + err);
-            });
-
-
-            connection.connect(function(conn) {
-                var chan = conn.openChannel();
-                chan.write(action, function() {
-                    chan.on('done',function(data) {
-                        var parsed = mikrotik.parseItems(data);
-
-                        var pl = [];
-                        parsed.forEach(function(item) {
-                            pl.push(item);
-                        });
-
-                        msg.payload = pl;
-                        node.send(msg);
-
-                        chan.closeOnDone = true;
-                        conn.closeOnDone = true;
-
+            if(action == '') return false;
+            connection = mikrotik.getConnection(ip, login, pass, {closeOnDone : true});
+            connection.getConnectPromise().then(function(conn) {
+                    conn.getCommandPromise(action).then(function resolved(values) {
+                            var parsed = mikrotik.parseItems(values);
+                            var pl = [];
+                            parsed.forEach(function(item) {
+                                pl.push(item);
+                            });
+                            msg.payload = values;
+                            node.send(msg);
+                    }, function rejected(reason) {
+                        node.error('Error executing cmd['+action+']: ' + JSON.stringify(reason));
                     });
-                });
-            });
+                },
+                function(err) {
+                    node.error("Connection error: " + err);
+                }
+            );
+        });
 
+        this.on('close', function() {
+            connection && connection.connected && connection.close(true);
         });
     }
 

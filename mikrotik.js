@@ -37,11 +37,12 @@ module.exports = function(RED) {
         var connection = null;
 
         this.on('input', function(msg) {
-            if (action == '') action = msg.payload;
-            if(action == '') return false;
+            var cmd = action;
+            if (cmd == '') cmd = msg.payload;
+            if (cmd == '') return false;
             connection = mikrotik.getConnection(ip, login, pass, {closeOnDone : true});
             connection.getConnectPromise().then(function(conn) {
-                    conn.getCommandPromise(action).then(function resolved(values) {
+                    conn.getCommandPromise(cmd).then(function resolved(values) {
                             var parsed = mikrotik.parseItems(values);
                             var pl = [];
                             parsed.forEach(function(item) {

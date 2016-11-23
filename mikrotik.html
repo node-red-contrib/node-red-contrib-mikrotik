@@ -1,15 +1,24 @@
 <script type="text/javascript">
+    RED.nodes.registerType('mikrotik-device',{
+        category: 'config',
+        defaults: {
+            host: { value: '192.168.0.1', required: true },
+            port: { value: 8728, required: true, validate: RED.validators.number() },
+            username: { value: 'admin', required: true },
+            password: { value: '', required: true },
+        },
+        label: function() {
+            return this.username + '@' + this.host + ':' + this.port;
+        }
+    });
+
     RED.nodes.registerType('mikrotik',{
         category: 'function',
         color: '#E9967A',
         defaults: {
+            device: { value: '', type: "mikrotik-device" },
             name: {value:""},
-            ip : {value: ""},
             action: {value:"0"}
-        },
-        credentials: {
-            login: {type:"text"},
-            pass: {type:"password"}
         },
         inputs:1,
         outputs:1,
@@ -18,22 +27,33 @@
             return this.name||"mikrotik";
         }
     });
+
+</script>
+
+<script type="text/x-red" data-template-name="mikrotik-device">
+    <div class="form-row">
+        <label for="node-config-input-host"><i class="fa fa-server"></i> Host</label>
+        <input type="text" id="node-config-input-host">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-port"><i class="fa fa-server"></i> Port</label>
+        <input type="text" id="node-config-input-port">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-username"><i class="fa fa-user"></i> Username</label>
+        <input type="text" id="node-config-input-username">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-password"><i class="fa fa-key"></i> Password</label>
+        <input type="password" id="node-config-input-password">
+    </div>
 </script>
 
 <script type="text/x-red" data-template-name="mikrotik">
     <div class="form-row">
-        <label for="node-input-ip"><i class="fa fa-wifi"></i> IP</label>
-        <input type="text" id="node-input-ip" placeholder="xxx.xxx.xxx.xxx">
+        <label for="node-input-device"><i class="fa fa-server"></i> Device</label>
+        <select id="node-input-device"></select>
     </div>
-    <div class="form-row">
-        <label for="node-input-login"><i class="icon-user"></i> Login</label>
-        <input type="text" id="node-input-login" placeholder="login">
-    </div>
-    <div class="form-row">
-        <label for="node-input-pass"><i class="fa fa-key"></i> Pass</label>
-        <input type="password" id="node-input-pass" placeholder="password">
-    </div>
-
     <div class="form-row">
         <label for="node-input-action"><i class="icon-tasks"></i> Action</label>
         <select id="node-input-action" placeholder="action">

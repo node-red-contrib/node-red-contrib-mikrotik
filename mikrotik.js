@@ -4,44 +4,56 @@
 var mikrotik = require('mikronode-ng');
 
 module.exports = function(RED) {
+    function NodeMikrotikDevice(n) {
+        RED.nodes.createNode(this, n);
+        this.host = n.host;
+        this.port = n.port;
+        this.username = n.username;
+        this.password = n.password;
+    }
+    RED.nodes.registerType("mikrotik-device", NodeMikrotikDevice);
+
+
     function NodeMikrotik(config) {
         RED.nodes.createNode(this,config);
-        this.action = config.action;
-        this.ip = config.ip;
+
+        this.device = RED.nodes.getNode(config.device);
         this.action = config.action;
 
         var node = this;
-        var ip = node.ip;
-        var login = node.credentials.login;
-        var pass = node.credentials.pass;
-        var action;
+        var host = this.device.host;
+        var port = this.device.port;
+        var username = this.device.username;
+        var password = this.device.password;
+
+        var command;
 
         switch (parseInt(node.action)) {
             case 0:
-                action = '/log/print';
+                command = '/log/print';
                 break;
             case 1:
-                action = '/system/resource/print';
+                command = '/system/resource/print';
                 break;
             case 2:
-                action = '/interface/wireless/registration-table/print';
+                command = '/interface/wireless/registration-table/print';
                 break;
             case 3:
-                action = '/system/reboot';
+                command = '/system/reboot';
                 break;
             case 9:
-                action = '';
+                command = '';
                 break;
         }
 
         var connection = null;
 
         this.on('input', function(msg) {
-            if (action == '') action = msg.payload;
-            if(action == '') return false;
-            connection = mikrotik.getConnection(ip, login, pass, {closeOnDone : true});
+            if (command == '') command = msg.payload;
+            if(command == '') return false;
+            connection = mikrotik.getConnection(host, username, password, {closeOnDone : true, port: port});
             connection.getConnectPromise().then(function(conn) {
-                    conn.getCommandPromise(action).then(function resolved(values) {
+                    conn.getCommandPromise(command).then(function resolved(values) {
                             var parsed = mikrotik.parseItems(values);
                             var pl = [];
                             parsed.forEach(function(item) {
@@ -50,7 +62,7 @@ module.exports = function(RED) {
                             msg.payload = values;
                             node.send(msg);
                     }, function rejected(reason) {
-                        node.error('Error executing cmd['+action+']: ' + JSON.stringify(reason));
+                        node.error('Error executing cmd['+command+']: ' + JSON.stringify(reason));
                     });
                 },
                 function(err) {
@@ -64,12 +76,7 @@ module.exports = function(RED) {
         });
     }
 
-    RED.nodes.registerType("mikrotik", NodeMikrotik, {
-        credentials: {
-            login: {type:"text"},
-            pass: {type:"password"}
-        }
-    });
+    RED.nodes.registerType("mikrotik", NodeMikrotik);
 };
 
 

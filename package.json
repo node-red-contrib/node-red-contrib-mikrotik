@@ -6,6 +6,13 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Alexander Pivovarov <pivovarov@gmail.com>",
+  "contributors": [
+    {
+      "name": "Ahmed Al Hafoudh",
+      "email": "alhafoudh@freevision.sk",
+      "url": "https://www.freevision.sk"
+    }
+  ],
   "node-red": {
     "nodes": {
       "mikrotik": "mikrotik.js"

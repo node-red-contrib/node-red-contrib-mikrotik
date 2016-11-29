@@ -5,7 +5,7 @@ Install
 -------
 Run command on Node-RED installation directory
 
-	npm install node-red-contrib-mikrotik
+	npm install node-red-contrib-mikrotik2
 	
 Config
 -------

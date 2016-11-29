@@ -1,5 +1,5 @@
-node-red-contrib-mikrotik
-========================
+node-red-contrib-mikrotik2
+==========================
 
 Install
 -------

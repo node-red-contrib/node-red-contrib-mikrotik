@@ -1,11 +1,13 @@
-node-red-contrib-mikrotik
-========================
+node-red-contrib-mikrotik2
+==========================
+
+Node based on node-red-contrib-mikrotik to work with Mikrotik devices which fixes device configuration problem.
 
 Install
 -------
 Run command on Node-RED installation directory
 
-	npm install node-red-contrib-mikrotik
+	npm install node-red-contrib-mikrotik2
 	
 Config
 -------

@@ -1,11 +1,18 @@
 {
-  "name": "node-red-contrib-mikrotik",
-  "version": "0.1.0",
-  "description": "Node to work with Mikrotik WiFi router",
+  "name": "node-red-contrib-mikrotik2",
+  "version": "0.1.1",
+  "description": "Node based on node-red-contrib-mikrotik to work with Mikrotik devices which fixes device configuration problem",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Alexander Pivovarov <pivovarov@gmail.com>",
+  "contributors": [
+    {
+      "name": "Ahmed Al Hafoudh",
+      "email": "alhafoudh@freevision.sk",
+      "url": "https://www.freevision.sk"
+    }
+  ],
   "node-red": {
     "nodes": {
       "mikrotik": "mikrotik.js"
@@ -22,10 +29,10 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bladerunner2020/node-red-contrib-mikrotik.git"
+    "url": "git+https://github.com/alhafoudh/node-red-contrib-mikrotik2.git"
   },
   "bugs": {
-    "url": "https://github.com/bladerunner2020/node-red-contrib-mikrotik/issues"
+    "url": "https://github.com/alhafoudh/node-red-contrib-mikrotik2/issues"
   },
-  "homepage": "https://github.com/bladerunner2020/node-red-contrib-mikrotik#readme"
+  "homepage": "https://github.com/alhafoudh/node-red-contrib-mikrotik2#readme"
 }

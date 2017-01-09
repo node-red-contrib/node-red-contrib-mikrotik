@@ -51,7 +51,7 @@ module.exports = function(RED) {
                             msg.payload = values;
                             node.send(msg);
                     }, function rejected(reason) {
-                        node.error('Error executing cmd['+action+']: ' + JSON.stringify(reason));
+                        node.error('Error executing cmd['+cmd+']: ' + JSON.stringify(reason));
                     });
                 },
                 function(err) {

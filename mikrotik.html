@@ -2,10 +2,10 @@
     RED.nodes.registerType('mikrotik-device',{
         category: 'config',
         defaults: {
-            host: { value: '192.168.0.1', required: true },
+            host: { value: '192.168.1.1', required: true },
             port: { value: 8728, required: true, validate: RED.validators.number() },
             username: { value: 'admin', required: true },
-            password: { value: '', required: true },
+            password: { value: '', required: true }
         },
         label: function() {
             return this.username + '@' + this.host + ':' + this.port;
@@ -73,5 +73,16 @@
 
 <script type="text/x-red" data-help-name="mikrotik">
    <p>A node that work with Mikrotik WiFi routers.</p>
-   <p>Read more about RouterOs API here: <a href="http://wiki.mikrotik.com/wiki/API_command_notes" target="_blank">http://wiki.mikrotik.com/wiki/API_command_notes</a>.</p>
+    <b>Device: </b> Setup Mikrotik settings like host, port (8278 - default), username and pass.<br><br>
+ <b>Action:</b>
+   <ul>
+       <li><b>Log: </b>returns log as <cod>msg.payload</code>. Mikrotik command: <i>/log print</i></li>
+       <li><b>Connected WiFi: </b>returns list of registered WiFi devices as <code>msg.payload</code>. Mikrotik command: <i>/interface wireless registration-table print</i></li>
+       <li><b>Reboot: </b>reboots Mikrotik. Mikrotik command: <i>/system reboot</i></li>
+       <li><b>Raw:</b> uses <code>msg.payload</code> as command. To pass command with parametrs use JSON object with <i>"command"
+        </i> property as <code>msg.payload</code>.
+       For example: <i>{"command":["/system/script/run","=.id=myscript"]}</i>. This example runs script <i>myscript</i>
+    </ul>
+
+   <p>Read more about RouterOs API: <a href="http://wiki.mikrotik.com/wiki/API_command_notes" target="_blank">here</a>.</p>
 </script>

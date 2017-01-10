@@ -69,10 +69,10 @@ module.exports = function(RED) {
                             msg.payload = values;
 
                             msg.command = cmd;
+                            msg.success = true;
                             node.send(msg);
                     }, function rejected(reason) {
                         node.error('Error executing cmd['+cmd+']: ' + JSON.stringify(reason));
-
                     });
                 },
                 function(err) {

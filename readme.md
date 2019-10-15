@@ -1,7 +1,7 @@
 node-red-contrib-mikrotik3
 ==========================
 
-Node based on node-red-contrib-mikrotik to work with Mikrotik devices which fixes device configuration problem.
+Node based on node-red-contrib-mikrotik to work with Mikrotik devices with new firmware.
 
 Install
 -------

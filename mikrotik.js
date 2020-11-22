@@ -8,11 +8,21 @@ module.exports = function(RED) {
         RED.nodes.createNode(this, n);
         this.host = n.host;
         this.port = n.port;
-        this.username = n.username;
-        this.password = n.password;
+        if ((!this.credentials) || (!this.credentials.secusername)) {
+            // take care the even non "converted" credentials that 
+            // are still unsafe stored, can be used.
+            this.credentials = {
+                secusername: n.username,
+                secpassword: n.password
+            }
+        }
     }
-    RED.nodes.registerType("mikrotik-device", NodeMikrotikDevice);
-
+    RED.nodes.registerType("mikrotik-device", NodeMikrotikDevice,{
+        credentials: {
+            secusername: { type: "text" },
+            secpassword: { type: "password" }
+        }
+    });
 
     function NodeMikrotik(config) {
         RED.nodes.createNode(this,config);
@@ -25,7 +35,11 @@ module.exports = function(RED) {
         var port = this.device.port;
         var username = this.device.username;
         var password = this.device.password;
-
+        if (!!this.device.credentials) {
+            username= this.device.credentials.secusername;
+            password = this.device.credentials.secpassword;
+        }
+    
         var command;
 
         switch (parseInt(node.action)) {
@@ -64,7 +78,7 @@ module.exports = function(RED) {
                             });
                             msg.payload = values;
 
-                            msg.command = cmd;
+                            msg.command = command;
                             msg.success = true;
                             node.send(msg);
                     }, function rejected(reason) {

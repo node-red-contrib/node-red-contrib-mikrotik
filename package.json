@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-mikrotik",
-  "version": "0.2.22",
+  "version": "0.3.0",
   "description": "Node based on node-red-contrib-mikrotik to work with Mikrotik devices which fixes device configuration problem",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -28,7 +28,8 @@
     }
   },
   "keywords": [
-    "node-red", "mikrotik"
+    "node-red",
+    "mikrotik"
   ],
   "license": "ISC",
   "dependencies": {

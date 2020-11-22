@@ -1,6 +1,6 @@
 {
-  "name": "node-red-contrib-mikrotik3",
-  "version": "0.2.22",
+  "name": "node-red-contrib-mikrotik",
+  "version": "0.3.0",
   "description": "Node based on node-red-contrib-mikrotik to work with Mikrotik devices which fixes device configuration problem",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,6 +11,15 @@
       "name": "Ahmed Al Hafoudh",
       "email": "alhafoudh@freevision.sk",
       "url": "https://www.freevision.sk"
+    },
+    {
+      "name": "Nikola 0nikola1",
+      "email": "n@bobetic.com",
+      "url": "https://github.com/0nikola1"
+    },
+    {
+      "name": "Konrad Mattheis",
+      "url": "https://github.com/konne"
     }
   ],
   "node-red": {
@@ -19,7 +28,8 @@
     }
   },
   "keywords": [
-    "node-red"
+    "node-red",
+    "mikrotik"
   ],
   "license": "ISC",
   "dependencies": {
@@ -29,10 +39,10 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alhafoudh/node-red-contrib-mikrotik2.git"
+    "url": "git+https://github.com/node-red-contrib/node-red-contrib-mikrotik.git"
   },
   "bugs": {
-    "url": "https://github.com/alhafoudh/node-red-contrib-mikrotik2/issues"
+    "url": "https://github.com/node-red-contrib/node-red-contrib-mikrotik/issues"
   },
-  "homepage": "https://github.com/alhafoudh/node-red-contrib-mikrotik2#readme"
+  "homepage": "https://github.com/node-red-contrib/node-red-contrib-mikrotik#readme"
 }

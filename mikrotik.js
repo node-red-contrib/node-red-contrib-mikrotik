@@ -49,17 +49,13 @@ module.exports = function(RED) {
         var connection = null;
 
         this.on('input', function(msg) {
-            var cmd = command;
 
-            if (command == '') cmd = msg.payload;
-            if (cmd == '') return false;
-            
-            if (cmd.command) cmd = cmd.command;
-            
-            
+            if (command == '') command = msg.payload;
+            if(command == '') return false;
             connection = mikrotik.getConnection(host, username, password, {closeOnDone : true, port: port});
             connection.getConnectPromise().then(function(conn) {
-                    conn.getCommandPromise(cmd).then(function resolved(values) {
+                    conn.getCommandPromise(command).then(function resolved(values) {
+
 
                             var parsed = mikrotik.parseItems(values);
                             var pl = [];
@@ -72,7 +68,8 @@ module.exports = function(RED) {
                             msg.success = true;
                             node.send(msg);
                     }, function rejected(reason) {
-                        node.error('Error executing cmd['+cmd+']: ' + JSON.stringify(reason));
+                        node.error('Error executing cmd['+command+']: ' + JSON.stringify(reason));
+
                     });
                 },
                 function(err) {

@@ -5,7 +5,6 @@ node-red-contrib-mikrotik
 <p>A <a href="http://nodered.org" target="_new">Node-RED</a> node that provides API for Mikrotik WiFi routers.(>RouterOS6.43)</p>
 This is an alfa verion.
 
-# Installation
 -------
 # Installation
 [![NPM](https://nodei.co/npm/node-red-contrib-mikrotik.png?downloads=true)](https://nodei.co/npm/node-red-contrib-mikrotik/)

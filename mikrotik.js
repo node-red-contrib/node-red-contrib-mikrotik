@@ -1,7 +1,7 @@
 /**
  * Created by Bladerunner on 11/03/16.
  */
-var mikrotik = require('mikronode-ng');
+var mikrotik = require('mikronode-ng2');
 
 module.exports = function(RED) {
     function NodeMikrotikDevice(n) {

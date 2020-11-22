@@ -45,6 +45,7 @@ TBD
 
 ### Example of getting interface info
  Where ***ether1internet*** is name of interface 
+ 
 `[{"id":"34844337.ceefbc","type":"mikrotik","z":"f0d0173f.b4a34","device":"","name":"","action":"9","x":680,"y":2720,"wires":[["dd3c5317.fd344"]]},{"id":"630604f7.ccb25c","type":"inject","z":"f0d0173f.b4a34","name":"","props":[{"p":"payload"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","payload":"{\"command\":[\"/interface/monitor-traffic\",\"=interface=ether1internet\",\"=once=true\"]}","payloadType":"json","x":550,"y":2720,"wires":[["34844337.ceefbc"]]},{"id":"dd3c5317.fd344","type":"debug","z":"f0d0173f.b4a34","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"false","statusVal":"","statusType":"auto","x":850,"y":2720,"wires":[]}]`
 
 
@@ -57,4 +58,5 @@ TBD
 ###  Example of running script
 
  Where ***Alarm*** is name of script
+ 
 `[{"id":"aee77086.2d473","type":"change","z":"f0d0173f.b4a34","name":"","rules":[{"t":"set","p":"payload","pt":"msg","to":"{\"command\":[\"/system/script/run\",\"=.id=Alarm\"]}","tot":"json"}],"action":"","property":"","from":"","to":"","reg":false,"x":680,"y":3300,"wires":[["378e1896.f530e"]]},{"id":"378e1896.f530e","type":"mikrotik","z":"f0d0173f.b4a34","device":"","name":"","action":"9","x":900,"y":3300,"wires":[[]]},{"id":"c5467461.d3301","type":"inject","z":"f0d0173f.b4a34","name":"","props":[{"p":"payload","v":"","vt":"date"},{"p":"topic","v":"","vt":"string"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","payload":"","payloadType":"date","x":500,"y":3300,"wires":[["aee77086.2d473"]]}]`

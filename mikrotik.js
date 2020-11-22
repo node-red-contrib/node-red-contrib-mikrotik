@@ -56,12 +56,16 @@ module.exports = function(RED) {
             connection.getConnectPromise().then(function(conn) {
                     conn.getCommandPromise(command).then(function resolved(values) {
 
+
                             var parsed = mikrotik.parseItems(values);
                             var pl = [];
                             parsed.forEach(function(item) {
                                 pl.push(item);
                             });
                             msg.payload = values;
+
+                            msg.command = cmd;
+                            msg.success = true;
                             node.send(msg);
                     }, function rejected(reason) {
                         node.error('Error executing cmd['+command+']: ' + JSON.stringify(reason));

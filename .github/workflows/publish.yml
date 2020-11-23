@@ -1,0 +1,42 @@
+name: Publish
+
+on:
+  release:
+    types: [ published ]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '14.x'
+
+    - name: npm install & set Version
+      run: |
+        npm ci
+        npm config set git-tag-version false
+        npm version ${{ github.event.release.tag_name }}
+
+    - name: build
+      run: npm run build --if-present
+
+    - uses: JS-DevTools/npm-publish@v1
+      with:
+          token: ${{ secrets.NPM_TOKEN }}
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: '${{ github.event.release.upload_url }}'
+        asset_path: ./node-red-contrib-mikrotik-${{ github.event.release.tag_name }}.tgz
+        asset_name: node-red-contrib-mikrotik-${{ github.event.release.tag_name }}.tgz
+        asset_content_type: application/zip

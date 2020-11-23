@@ -4,11 +4,37 @@
         defaults: {
             host: { value: '192.168.0.1', required: true },
             port: { value: 8728, required: true, validate: RED.validators.number() },
-            username: { value: 'admin', required: true },
-            password: { value: '', required: true },
+            username: { value: 'admin' },
+            password: { value: '' }
         },
         label: function() {
-            return this.username + '@' + this.host + ':' + this.port;
+            debugger;
+            if (!!this.username )
+                return this.username + '@' + this.host + ':' + this.port;
+            else
+                return this.host + ':' + this.port;
+        },
+        credentials:  {
+            secusername: { type: "text", required: true },
+            secpassword: { type: "password", required: true },
+        },
+        oneditprepare() {
+            // migrate old non secure credentials in the form            
+            if (!this.credentials)
+                this.credentials={};
+                
+            if (!this.credentials.secusername)
+            {
+                this.credentials.secusername = this.username;
+                this.credentials.secpassword = this.password;
+                $("#node-config-input-secusername").val(this.username);
+                $("#node-config-input-secpassword").val(this.password);
+            }
+        },
+        oneditsave() {
+           // take care to fully remove the non secured saved credentials
+           this.username = null;
+           this.password = null;
         }
     });
 
@@ -41,11 +67,11 @@
     </div>
     <div class="form-row">
         <label for="node-config-input-username"><i class="fa fa-user"></i> Username</label>
-        <input type="text" id="node-config-input-username">
+        <input type="text" id="node-config-input-secusername">
     </div>
     <div class="form-row">
         <label for="node-config-input-password"><i class="fa fa-key"></i> Password</label>
-        <input type="password" id="node-config-input-password">
+        <input type="password" id="node-config-input-secpassword">
     </div>
 </script>
 

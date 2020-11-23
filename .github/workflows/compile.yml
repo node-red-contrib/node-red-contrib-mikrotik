@@ -1,0 +1,30 @@
+name: compile
+
+on:
+  push:
+    branches: [ master, development ]
+    paths:
+      - 'src/**'
+      - '.github/workflows/compile.yml'
+
+  pull_request:
+    branches: [ master, development ]
+    paths:
+      - 'src/**'
+      - '.github/workflows/compile.yml'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 15.x
+    - name: compile
+      run: |
+        npm ci
+        npm run build --if-present

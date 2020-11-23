@@ -36,7 +36,7 @@
   ],
   "license": "ISC",
   "dependencies": {
-    "mikronode-ng2": "^1.0.12"
+    "node-routeros": "1.6.8"
   },
   "main": "mikrotik.js",
   "devDependencies": {

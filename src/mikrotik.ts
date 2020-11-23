@@ -1,7 +1,7 @@
 import { NodeAPI, Node, NodeMessageInFlow } from "node-red";
 import { MikrotikDeviceNode } from "./interfaces"
 
-var mikrotik = require('mikronode-ng2');
+import { RouterOSAPI } from "node-routeros";
 
 export = function (RED: NodeAPI) {
     function NodeMikrotik(this: Node & { device: MikrotikDeviceNode, action: string }, config: any) {
@@ -19,61 +19,70 @@ export = function (RED: NodeAPI) {
             username = this.device.credentials.secusername;
             password = this.device.credentials.secpassword;
         }
-        
-        let command: string;
+
+        let cmd: any;
 
         switch (parseInt(node.action)) {
             case 0:
-                command = '/log/print';
+                cmd = '/log/print';
                 break;
             case 1:
-                command = '/system/resource/print';
+                cmd = '/system/resource/print';
                 break;
             case 2:
-                command = '/interface/wireless/registration-table/print';
+                cmd = '/interface/wireless/registration-table/print';
                 break;
             case 3:
-                command = '/system/reboot';
+                cmd = '/system/reboot';
                 break;
             case 9:
-                command = '';
+                cmd = '';
                 break;
         }
-
-        var connection = null;
+        console.log("NEW NODE"+ cmd);
+        var connection: RouterOSAPI = null;
 
         this.on('input', function (msg: NodeMessageInFlow & { command: string, success: boolean }) {
-
+            let command = cmd;
             if (command == '') command = msg.payload as string;
+            // for compatibility reasons of old mikrotik node
+            if (command.command) command = command.command;
             if (command == '') return false;
-            connection = mikrotik.getConnection(host, username, password, { closeOnDone: true, port: port });
-            connection.getConnectPromise().then(function (conn) {
-                conn.getCommandPromise(command).then(function resolved(values) {
 
+            connection = new RouterOSAPI({
+                host: host,
+                user: username,
+                password: password,
+                port: port
+            });
 
-                    var parsed = mikrotik.parseItems(values);
-                    var pl = [];
-                    parsed.forEach(function (item: any) {
-                        pl.push(item);
+            try {
+                connection.connect()
+                    .then(() => {
+                        return connection.write(command);
+                    })
+                    .then((data) => {
+                        msg.payload = data;
+
+                        msg.command = command;
+                        msg.success = true;
+                        node.send(msg);
+
+                        connection.close();
+                    })
+                    .catch((err) => {
+                        node.error('Error executing cmd[' + JSON.stringify(command) + ']: ' + JSON.stringify(err));
                     });
-                    msg.payload = values;
+            }
+            catch (err) {
+                node.error('Error: ' + JSON.stringify(err));
+            }
 
-                    msg.command = command;
-                    msg.success = true;
-                    node.send(msg);
-                }, function rejected(reason: any) {
-                    node.error('Error executing cmd[' + command + ']: ' + JSON.stringify(reason));
-
-                });
-            },
-                function (err: any) {
-                    node.error("Connection error: " + err);
-                }
-            );
         });
 
         this.on('close', function () {
-            connection && connection.connected && connection.close(true);
+            console.log("CLOSE");
+            connection && connection.connected && connection.close();
         });
     }
 

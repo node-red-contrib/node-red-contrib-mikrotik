@@ -3,7 +3,9 @@
   "version": "0.3.0",
   "description": "Node based on node-red-contrib-mikrotik to work with Mikrotik devices which fixes device configuration problem",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run tsc",
+    "postbuild": "node tool/buildhtml.js",
+    "tsc": "tsc"
   },
   "author": "Alexander Pivovarov <pivovarov@gmail.com>",
   "contributors": [
@@ -24,7 +26,7 @@
   ],
   "node-red": {
     "nodes": {
-      "mikrotik": "mikrotik.js"
+      "mikrotik": "nodes/mikrotik.js"
     }
   },
   "keywords": [
@@ -36,7 +38,10 @@
     "mikronode-ng2": "^1.0.12"
   },
   "main": "mikrotik.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/node-red": "^1.1.1",
+    "typescript": "^4.0.5"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/node-red-contrib/node-red-contrib-mikrotik.git"

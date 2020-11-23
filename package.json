@@ -26,7 +26,8 @@
   ],
   "node-red": {
     "nodes": {
-      "mikrotik": "nodes/mikrotik.js"
+      "mikrotik": "nodes/mikrotik.js",
+      "mikrotik-device": "nodes/mikrotik-device.js"
     }
   },
   "keywords": [

@@ -40,13 +40,19 @@ for (i = 0; i < entries.length; i ++)
             for (j = 0; j < dstentries.length; j++){
                 let item2 = dstentries[j];
                 let fullpath2 = path.join(exportpath, item2);
-                if (!fs.lstatSync(fullpath2).isDirectory())
+                
+                try
                 {
-                    if (item2.toLocaleLowerCase().startsWith(item.toLocaleLowerCase())
-                    && item2.toLocaleLowerCase() != item.toLocaleLowerCase()) {
-                        joinfiles.push(item2);
+                    if (!fs.lstatSync(fullpath2).isDirectory())
+                    {
+                        if (item2.toLocaleLowerCase().startsWith(item.toLocaleLowerCase())
+                        && item2.toLocaleLowerCase() != item.toLocaleLowerCase()) {
+                            console.log("     " + item2);
+                            joinfiles.push(item2);
+                        }
                     }
                 }
+                catch {}
             }
             copyFile(item, joinfiles, searchpath, exportpath);
         }

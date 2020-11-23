@@ -1,21 +1,3 @@
-<script type="text/javascript">
-    RED.nodes.registerType('mikrotik',{
-        category: 'function',
-        color: '#E9967A',
-        defaults: {
-            device: { value: '', type: "mikrotik-device" },
-            name: {value:""},
-            action: {value:"0"}
-        },
-        inputs:1,
-        outputs:1,
-        icon: "feed.png",
-        label: function() {
-            return this.name||"mikrotik";
-        }
-    });
-</script>
-
 <html type="text/x-red" data-template-name="mikrotik">
     <div class="form-row">
         <label for="node-input-device"><i class="fa fa-server"></i> Device</label>

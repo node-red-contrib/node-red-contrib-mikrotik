@@ -1,43 +1,4 @@
 <script type="text/javascript">
-    RED.nodes.registerType('mikrotik-device',{
-        category: 'config',
-        defaults: {
-            host: { value: '192.168.0.1', required: true },
-            port: { value: 8728, required: true, validate: RED.validators.number() },
-            username: { value: 'admin' },
-            password: { value: '' }
-        },
-        label: function() {
-            debugger;
-            if (!!this.username )
-                return this.username + '@' + this.host + ':' + this.port;
-            else
-                return this.host + ':' + this.port;
-        },
-        credentials:  {
-            secusername: { type: "text", required: true },
-            secpassword: { type: "password", required: true },
-        },
-        oneditprepare() {
-            // migrate old non secure credentials in the form            
-            if (!this.credentials)
-                this.credentials={};
-                
-            if (!this.credentials.secusername)
-            {
-                this.credentials.secusername = this.username;
-                this.credentials.secpassword = this.password;
-                $("#node-config-input-secusername").val(this.username);
-                $("#node-config-input-secpassword").val(this.password);
-            }
-        },
-        oneditsave() {
-           // take care to fully remove the non secured saved credentials
-           this.username = null;
-           this.password = null;
-        }
-    });
-
     RED.nodes.registerType('mikrotik',{
         category: 'function',
         color: '#E9967A',
@@ -53,29 +14,9 @@
             return this.name||"mikrotik";
         }
     });
-
 </script>
 
-<script type="text/x-red" data-template-name="mikrotik-device">
-    <div class="form-row">
-        <label for="node-config-input-host"><i class="fa fa-server"></i> Host</label>
-        <input type="text" id="node-config-input-host">
-    </div>
-    <div class="form-row">
-        <label for="node-config-input-port"><i class="fa fa-server"></i> Port</label>
-        <input type="text" id="node-config-input-port">
-    </div>
-    <div class="form-row">
-        <label for="node-config-input-username"><i class="fa fa-user"></i> Username</label>
-        <input type="text" id="node-config-input-secusername">
-    </div>
-    <div class="form-row">
-        <label for="node-config-input-password"><i class="fa fa-key"></i> Password</label>
-        <input type="password" id="node-config-input-secpassword">
-    </div>
-</script>
-
-<script type="text/x-red" data-template-name="mikrotik">
+<html type="text/x-red" data-template-name="mikrotik">
     <div class="form-row">
         <label for="node-input-device"><i class="fa fa-server"></i> Device</label>
         <select id="node-input-device"></select>
@@ -95,9 +36,9 @@
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" class="paletteLabel" placeholder="Name">
     </div>
-</script>
+</html>
 
-<script type="text/x-red" data-help-name="mikrotik">
+<html type="text/x-red" data-help-name="mikrotik">
    <p>A node that work with Mikrotik WiFi routers.</p>
     <b>Device: </b> Setup Mikrotik settings like host, port (8278 - default), username and pass.<br><br>
  <b>Action:</b>
@@ -112,4 +53,4 @@
     <p>In case of success <code>msg.success</code> is set to true.
 
    <p>Read more about RouterOs API: <a href="http://wiki.mikrotik.com/wiki/API_command_notes" target="_blank">here</a>.</p>
-</script>
+</html>

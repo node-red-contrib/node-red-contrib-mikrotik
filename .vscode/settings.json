@@ -7,9 +7,6 @@
         },
         "**/*.js.map": {
             "when": "$(basename)"
-        },
-        "**/*.d.ts": {
-            "when": "$(basename).ts"
         }
     },
     "typescript.tsdk": "./node_modules/typescript/lib"

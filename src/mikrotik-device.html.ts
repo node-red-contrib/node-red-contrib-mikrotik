@@ -2,7 +2,7 @@ import { EditorRED, EditorNodeDef } from "node-red";
 declare var RED: EditorRED;
 import { Credentials, MikrotikDeviceConfig } from "./interfaces";
 
-RED.nodes.registerType('mikrotik-device',{
+RED.nodes.registerType('mikrotik-device', {
     category: 'config',
     defaults: {
         host: { value: '192.168.0.1', required: true },
@@ -21,8 +21,8 @@ RED.nodes.registerType('mikrotik-device',{
         secpassword: { type: "password" },
     },
     oneditprepare() {
-        // migrate old non secure credentials in the form    
-   
+        // migrate old non secure credentials in the form
+
         if (!this.credentials)
             this.credentials = {} as any;
 

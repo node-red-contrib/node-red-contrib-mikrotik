@@ -10,7 +10,7 @@ export = function (RED: NodeAPI) {
         this.port = def.port;
 
         if ((!this.credentials) || (!this.credentials.secusername)) {
-            // take care the even non "converted" credentials that 
+            // take care the even non "converted" credentials that
             // are still unsafe stored, can be used.
             this.credentials = {
                 secusername: def.username,

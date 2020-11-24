@@ -22,7 +22,7 @@ export = function (RED: NodeAPI) {
 
         let cmd: any;
 
-        switch (parseInt(node.action)) {
+        switch (parseInt(node.action, 10)) {
             case 0:
                 cmd = '/log/print';
                 break;
@@ -39,7 +39,7 @@ export = function (RED: NodeAPI) {
                 cmd = '';
                 break;
         }
-        console.log("NEW NODE"+ cmd);
+        console.log("NEW NODE" + cmd);
         var connection: RouterOSAPI = null;
 
         this.on('input', function (msg: NodeMessageInFlow & { command: string, success: boolean }) {

@@ -54,6 +54,7 @@ jobs:
   
     - name: pack
       run:  |
+        cat package.json
         npm pack
 
     - name: Update package.json for NameWith3

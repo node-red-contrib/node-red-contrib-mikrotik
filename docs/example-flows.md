@@ -9,13 +9,11 @@ Where ***ETHER1INTERNET*** is name of interface
 The injected message is:
 
 ```json
-{
-    "command": [
-        "/interface/monitor-traffic",
-        "=interface=ETHER1INTERNET",
-        "=once=true"
-    ]
-}
+[
+    "/interface/monitor-traffic",
+    "=interface=ETHER1INTERNET",
+    "=once=true"
+]
 ```
 
 <details>
@@ -56,7 +54,7 @@ The injected message is:
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "{\"command\":[\"/interface/monitor-traffic\",\"=interface=ETHER1INTERNET\",\"=once=true\"]}",
+        "payload": "[\"/interface/monitor-traffic\",\"=interface=ETHER1INTERNET\",\"=once=true\"]",
         "payloadType": "json",
         "x": 550,
         "y": 2720,
@@ -91,11 +89,9 @@ The injected message is:
 The injected message is:
 
 ```json
-{
-    "command": [
-        "/system/health/print"
-    ]
-}
+[
+    "/system/health/print"
+]
 ```
 
 <details>
@@ -127,7 +123,7 @@ The injected message is:
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "{\"command\":[\"/system/health/print\"]}",
+                "to": "[\"/system/health/print\"]",
                 "tot": "json"
             }
         ],
@@ -201,12 +197,10 @@ Where ***Alarm*** is name of script
 The injected message is:
 
 ```json
-{
-    "command": [
-        "/system/script/run",
-        "=.id=Alarm"
-    ]
-}
+[
+    "/system/script/run",
+    "=.id=Alarm"
+]
 ```
 
 <details>
@@ -294,11 +288,9 @@ The injected message is:
 The injected message is:
 
 ```json
-{
-    "command": [
-        "/ip/dhcp-server/lease/getall"
-    ]
-}
+[
+    "/ip/dhcp-server/lease/getall"
+]
 ```
 
 <details>
@@ -342,7 +334,7 @@ The injected message is:
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "{\"command\":[\"/ip/dhcp-server/lease/getall\"]}",
+        "payload": "[\"/ip/dhcp-server/lease/getall\"]",
         "payloadType": "json",
         "x": 350,
         "y": 3120,
@@ -376,7 +368,7 @@ The injected message is:
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "{\"command\":[\"/ip/dhcp-server/lease/getall\"]}",
+                "to": "[\"/ip/dhcp-server/lease/getall\"]",
                 "tot": "json"
             }
         ],

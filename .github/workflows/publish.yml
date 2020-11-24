@@ -24,10 +24,13 @@ jobs:
         npm config set git-tag-version false
         npm version ${{ github.event.release.tag_name }}
 
-    - name: build
-      run: npm run build --if-present
+    - name: build & pack
+      run:  |
+        npm run build --if-present
+        npm pack
 
     - uses: JS-DevTools/npm-publish@v1
+      if: "!github.event.release.prerelease"
       with:
           token: ${{ secrets.NPM_TOKEN }}
 
@@ -37,6 +40,29 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: '${{ github.event.release.upload_url }}'
-        asset_path: ./node-red-contrib-mikrotik-${{ github.event.release.tag_name }}.tgz
-        asset_name: node-red-contrib-mikrotik-${{ github.event.release.tag_name }}.tgz
+        asset_path: ./${{ github.event.repository.name }}-${{ github.event.release.tag_name }}.tgz
+        asset_name: ${{ github.event.repository.name }}-${{ github.event.release.tag_name }}.tgz
         asset_content_type: application/zip
+
+
+    - name: Update package.json for NameWith2
+      uses: jossef/action-set-json-field@v1
+      with:
+        file: package.json
+        field: name
+        value: ${{ github.event.repository.name }}2
+  
+    - name: pack
+      run:  |
+        npm pack
+
+    - name: Update package.json for NameWith3
+      uses: jossef/action-set-json-field@v1
+      with:
+        file: package.json
+        field: name
+        value: ${{ github.event.repository.name }}3
+  
+    - name: pack
+      run:  |
+        npm pack        

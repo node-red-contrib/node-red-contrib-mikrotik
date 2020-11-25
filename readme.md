@@ -31,6 +31,12 @@ Available actions:
 
 ## Usage
 
+Add the node to a flow, add an inject and a debug node, configure your connection and you are ready to go.
+
+If you can override every property with the message object. The names are:
+
+msg. -> username, password, host, port, payload/command
+
 ### Basic
 
 TBD
@@ -39,4 +45,4 @@ TBD
 
 ### RAW
 
-For the usage of the RAW mode there are [here](docs/example-flows.md) some examples.
+For the usage of the RAW/Command mode there are [here](docs/example-flows.md) some examples.

@@ -54,15 +54,8 @@ jobs:
   
     - name: pack
       run:  |
-        cat package.json
-        echo "***************"
-        ls
-        cd ..
-        ls
-        cd ~
-        ls
-        rm .npmrc
-        echo "---------------"
+        ls -al
+        rm -f .npmrc
         npm pack
 
     - name: Update package.json for NameWith3

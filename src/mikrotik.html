@@ -5,14 +5,14 @@
 </div>
 
 <div class="form-row">
-    <label for="node-input-action"><i class="icon-tasks"></i> Action</label>
-    <select id="node-input-action" placeholder="action">
-        <option value="0">Log</option>
-        <option value="1">System resources</option>
-        <option value="2">Connected WiFi</option>
-        <option value="3">Reboot</option>
-        <option value="9">Raw Command or (use msg.payload)</option>
-    </select>
+  <label for="node-input-action"><i class="icon-tasks"></i> Action</label>
+  <select id="node-input-action" placeholder="action">
+      <option value="0">Log</option>
+      <option value="1">System resources</option>
+      <option value="2">Connected WiFi</option>
+      <option value="3">Reboot</option>
+      <option value="9">Raw Command or (use msg.payload)</option>
+  </select>
 </div>
 
 <div class="form-row" id="node-input-command-row" >
@@ -25,25 +25,56 @@
     <label for="node-input-name"><i class="icon-tag"></i> Name</label>
     <input type="text" id="node-input-name" class="paletteLabel" placeholder="Name">
 </div>
-
+  
+<div class="form-tips">
+    You can override the command properties with <code>msg.payload</code> or <code>msg.command</code>
+    To override connections settings just sent <code>msg.username, .password, .host, .port</code>
+</div>  
 </html>
 
 <html type="text/x-red" data-help-name="mikrotik">
-<p>A node that work with Mikrotik WiFi routers.</p>
-<b>Device: </b> Setup Mikrotik settings like host, port (8278 - default), username and pass.<br><br>
+<p>A node that connect with Mikrotik WiFi routers via the
+    <a href="http://wiki.mikrotik.com/wiki/API_command_notes" target="_blank">RouterOs API</a>.
+</p>
+
+<h3>Configuration</h3>
+<b>Device:</b> Setup Mikrotik settings like host, port (8278 - default), username and pass.<br><br>
 <b>Action:</b>
 <ul>
-    <li><b>Log: </b>returns log as <cod>msg.payload</code>. Mikrotik command: <i>/log print</i></li>
+    <li><b>Log: </b>returns log as <cod>msg.payload</code>. Mikrotik command: <i>/log/print</i></li>
     <li><b>Connected WiFi: </b>returns list of registered WiFi devices as <code>msg.payload</code>. Mikrotik command:
-        <i>/interface wireless registration-table print</i></li>
-    <li><b>Reboot: </b>reboots Mikrotik. Mikrotik command: <i>/system reboot</i></li>
+        <i>/interface/wireless/registration-table/print</i></li>
+    <li><b>Reboot: </b>reboots Mikrotik. Mikrotik command: <i>/system/reboot</i></li>
     <li><b>Raw:</b> uses <code>msg.payload</code> as command. To pass command with parametrs use JSON object with
         <i>"command"
         </i> property as <code>msg.payload</code>.
         For example: <i>["/system/script/run","=.id=myscript"]</i>. This example runs script <i>myscript</i>
 </ul>
-<p>In case of success <code>msg.success</code> is set to true.
 
-<p>Read more about RouterOs API: <a href="http://wiki.mikrotik.com/wiki/API_command_notes" target="_blank">here</a>.</p>
+<h3>Output</h3>
+<dl class="message-properties">
+    <dt>payload <span class="property-type">object</span> </dt>
+    <dd>The output/result of the executed command on the Mikrotik device.</dd>
+    <dt>command<span class="property-type">object</span> </dt>
+    <dd>The executed command.</dd>
+    <dt>success<span class="property-type">boolean</span></dt>
+    <dd>
+        <cod>true</cod> if the command could be successfully executet.
+    </dd>
+</dl>
+
+<h3>Input</h3>
+<dl class="message-properties">
+    <dt class="optional">payload / command<span class="property-type">object</span></dt>
+    <dd>This override the executed command.</dd>
+    <dt class="option">username<span class="property-type">string</span></dt>
+    <dd>This overrides the username.</dd>
+    <dt class="option">password<span class="property-type">string</span></dt>
+    <dd>This overrides the password.</dd>
+    <dt class="option">host<span class="property-type">string</span></dt>
+    <dd>This overrides the host.</dd>
+    <dt class="option">port<span class="property-type">number</span></dt>
+    <dd>This overrides the port.</dd>
+</dl>
 
 </html>

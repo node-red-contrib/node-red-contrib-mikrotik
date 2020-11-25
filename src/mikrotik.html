@@ -6,7 +6,7 @@
 
 <div class="form-row">
   <label for="node-input-action"><i class="icon-tasks"></i> Action</label>
-  <select id="node-input-action" placeholder="action">
+  <select id="node-input-action" placeholder="action" style="width: 70%;" >
       <option value="0">Log</option>
       <option value="1">System resources</option>
       <option value="2">Connected WiFi</option>
@@ -27,8 +27,8 @@
 </div>
   
 <div class="form-tips">
-    You can override the command properties with <code>msg.payload</code> or <code>msg.command</code>
-    To override connections settings just sent <code>msg.username, .password, .host, .port</code>
+    You can override the command properties with <code>msg.payload</code> or <code>msg.command</code><br><br>
+    To override connections settings just sent <code>msg.user, msg.password, msg.host, msg.port</code>
 </div>  
 </html>
 
@@ -67,7 +67,7 @@
 <dl class="message-properties">
     <dt class="optional">payload / command<span class="property-type">object</span></dt>
     <dd>This override the executed command.</dd>
-    <dt class="option">username<span class="property-type">string</span></dt>
+    <dt class="option">user<span class="property-type">string</span></dt>
     <dd>This overrides the username.</dd>
     <dt class="option">password<span class="property-type">string</span></dt>
     <dd>This overrides the password.</dd>

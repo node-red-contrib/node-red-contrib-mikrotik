@@ -26,7 +26,7 @@ RED.nodes.registerType('mikrotik', {
             const lookUp = ['/log/print', '/system/resource/print', '/interface/wireless/registration-table/print', '/system/reboot'];
             let value = parseInt($("#node-input-action").val() as string, 10);
             if (value < 0 || value > 3) {
-                value = null;
+                value = -1;
                 newType = node["command-type"];
             }
             else
@@ -35,7 +35,7 @@ RED.nodes.registerType('mikrotik', {
             $("#node-input-command").typedInput('type', newType);
             $("#node-input-command").typedInput('value', cmd);
 
-            $("#node-input-command-row").find('*').prop("disabled", !value);
+            $("#node-input-command-row").find('*').prop("disabled", value != -1);
         });
 
         $("#node-input-command").typedInput({

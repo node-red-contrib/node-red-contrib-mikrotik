@@ -5,6 +5,7 @@
   "scripts": {
     "build": "npm run tsc",
     "postbuild": "node tool/buildhtml.js",
+    "nodered": "npm run build && node-red",
     "tsc": "tsc"
   },
   "author": "Alexander Pivovarov <pivovarov@gmail.com>",

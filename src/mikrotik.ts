@@ -9,11 +9,10 @@ export = function (RED: NodeAPI) {
         let node = this;
 
         let device = RED.nodes.getNode(config.device) as MikrotikDeviceNode;
-
         let deviceConfig = {
             host: device.host,
             port: device.port,
-            username: device.credentials.secusername,
+            user: device.credentials.secusername,
             password: device.credentials.secpassword,
         };
 
@@ -29,10 +28,9 @@ export = function (RED: NodeAPI) {
         var connection: RouterOSAPI = null;
 
         this.on('input', function (msg: NodeMessageInFlow & { command: any, success: boolean } & typeof deviceConfig) {
-
             // allow override of parameters through properties of the message
             let cfg = { ...deviceConfig };
-            if (msg.username) cfg.username = msg.username;
+            if (msg.user) cfg.user = msg.user;
             if (msg.password) cfg.password = msg.password;
             if (msg.host) cfg.host = msg.host;
             if (msg.port) cfg.port = msg.port;
@@ -42,8 +40,8 @@ export = function (RED: NodeAPI) {
             // for compatibility reasons of old mikrotik node
             if (msg.command.command) msg.command = msg.command.command;
 
-            connection = new RouterOSAPI(cfg);
             try {
+                connection = new RouterOSAPI(cfg);
                 connection.connect()
                     .then(() => {
                         return connection.write(msg.command);
@@ -57,6 +55,7 @@ export = function (RED: NodeAPI) {
                     })
                     .catch((err) => {
                         node.error('Error executing cmd[' + JSON.stringify(msg.command) + ']: ' + JSON.stringify(err));
+                        connection.close();
                     });
             }
             catch (err) {

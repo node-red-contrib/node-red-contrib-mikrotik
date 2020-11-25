@@ -2,7 +2,7 @@ import { EditorRED, EditorNodeDef } from "node-red";
 declare var RED: EditorRED;
 
 RED.nodes.registerType('mikrotik', {
-    category: 'function',
+    category: 'network',
     color: '#E9967A',
     defaults: {
         device: { value: '', type: "mikrotik-device" },

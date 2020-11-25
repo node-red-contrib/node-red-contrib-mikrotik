@@ -4,93 +4,70 @@ import { MikrotikDeviceNode } from "./interfaces"
 import { RouterOSAPI } from "node-routeros";
 
 export = function (RED: NodeAPI) {
-    function NodeMikrotik(this: Node & { device: MikrotikDeviceNode, action: string }, config: any) {
+    function NodeMikrotik(this: Node, config: any) {
         RED.nodes.createNode(this, config);
+        let node = this;
 
-        this.device = RED.nodes.getNode(config.device) as MikrotikDeviceNode;
-        this.action = config.action;
+        let device = RED.nodes.getNode(config.device) as MikrotikDeviceNode;
 
-        var node = this;
-        var host = this.device.host;
-        var port = this.device.port;
-        var username = this.device.username;
-        var password = this.device.password;
-        if (!!this.device.credentials) {
-            username = this.device.credentials.secusername;
-            password = this.device.credentials.secpassword;
+        let deviceConfig = {
+            host: device.host,
+            port: device.port,
+            username: device.credentials.secusername,
+            password: device.credentials.secpassword,
+        };
+
+        let cmd = config.command;
+        // convert action -> command for not migrated nodes, can be removed with a breaking change
+        if (!cmd) {
+            const lookUp = ['/log/print', '/system/resource/print', '/interface/wireless/registration-table/print', '/system/reboot'];
+            let value = parseInt(config.action as string, 10);
+            if (-1 < value && value < 4)
+                cmd = lookUp[value];
         }
 
-        let cmd: any;
-
-        switch (parseInt(node.action, 10)) {
-            case 0:
-                cmd = '/log/print';
-                break;
-            case 1:
-                cmd = '/system/resource/print';
-                break;
-            case 2:
-                cmd = '/interface/wireless/registration-table/print';
-                break;
-            case 3:
-                cmd = '/system/reboot';
-                break;
-            case 9:
-                cmd = '';
-                break;
-        }
-        console.log("NEW NODE" + cmd);
         var connection: RouterOSAPI = null;
 
-        this.on('input', function (msg: NodeMessageInFlow & { command: string, success: boolean }) {
-            let command = cmd;
-            if (command == '') command = msg.payload as string;
+        this.on('input', function (msg: NodeMessageInFlow & { command: any, success: boolean } & typeof deviceConfig) {
+
+            // allow override of parameters through properties of the message
+            let cfg = { ...deviceConfig };
+            if (msg.username) cfg.username = msg.username;
+            if (msg.password) cfg.password = msg.password;
+            if (msg.host) cfg.host = msg.host;
+            if (msg.port) cfg.port = msg.port;
+
+            if (!msg.command) msg.command = cmd;
+            if (!msg.command) msg.command = msg.payload;
             // for compatibility reasons of old mikrotik node
-            if (command.command) command = command.command;
-            if (command == '') return false;
+            if (msg.command.command) msg.command = msg.command.command;
 
-            connection = new RouterOSAPI({
-                host: host,
-                user: username,
-                password: password,
-                port: port
-            });
-
+            connection = new RouterOSAPI(cfg);
             try {
                 connection.connect()
                     .then(() => {
-                        return connection.write(command);
+                        return connection.write(msg.command);
                     })
                     .then((data) => {
                         msg.payload = data;
-
-                        msg.command = command;
                         msg.success = true;
                         node.send(msg);
 
                         connection.close();
                     })
                     .catch((err) => {
-                        node.error('Error executing cmd[' + JSON.stringify(command) + ']: ' + JSON.stringify(err));
+                        node.error('Error executing cmd[' + JSON.stringify(msg.command) + ']: ' + JSON.stringify(err));
                     });
             }
             catch (err) {
                 node.error('Error: ' + JSON.stringify(err));
             }
-
         });
 
         this.on('close', function () {
-            console.log("CLOSE");
             connection && connection.connected && connection.close();
         });
     }
 
     RED.nodes.registerType("mikrotik", NodeMikrotik);
 };
-
-
-
-
-
-

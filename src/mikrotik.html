@@ -3,25 +3,33 @@
     <label for="node-input-device"><i class="fa fa-server"></i> Device</label>
     <select id="node-input-device"></select>
 </div>
+
 <div class="form-row">
-    <label for="node-input-action"><i class="icon-tasks"></i> Action</label>
-    <select id="node-input-action" placeholder="action">
-        <option value="0">Log</option>
-        <option value="1">System resources</option>
-        <option value="2">Connected WiFi</option>
-        <option value="3">Reboot</option>
-        <option value="9">Raw (use msg.payload)</option>
-    </select>
+  <label for="node-input-action"><i class="icon-tasks"></i> Action</label>
+  <select id="node-input-action" placeholder="action">
+      <option value="0">Log</option>
+      <option value="1">System resources</option>
+      <option value="2">Connected WiFi</option>
+      <option value="3">Reboot</option>
+      <option value="9">Raw Command or (use msg.payload)</option>
+  </select>
+</div>
+
+<div class="form-row" id="node-input-command-row" >
+    <label for="node-input-command">Command</label>
+    <input type="text" id="node-input-command">
+    <input type="hidden" id="node-input-command-type">
 </div>
 
 <div class="form-row">
     <label for="node-input-name"><i class="icon-tag"></i> Name</label>
     <input type="text" id="node-input-name" class="paletteLabel" placeholder="Name">
 </div>
-
+  
 <div class="form-tips">
     You can override the command properties with <code>msg.payload</code> or <code>msg.command</code>
     To override connections settings just sent <code>msg.username, .password, .host, .port</code>
+</div>  
 </html>
 
 <html type="text/x-red" data-help-name="mikrotik">

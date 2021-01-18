@@ -37,7 +37,7 @@
   ],
   "license": "ISC",
   "dependencies": {
-    "node-routeros": "1.6.8"
+    "node-routeros": "1.6.9"
   },
   "main": "mikrotik.js",
   "devDependencies": {

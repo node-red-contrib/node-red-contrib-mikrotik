@@ -35,7 +35,11 @@ Add the node to a flow, add an inject and a debug node, configure your connectio
 
 If you can override every property with the message object. The names are:
 
-msg. -> username, password, host, port, payload/command
+msg. -> username, password, host, port, payload/command, ssl
+
+### SSL
+
+If you like to have a ssl connection between the node and the mikrotik router see the [documentation](docs/api-ssl.md)
 
 ### Basic
 

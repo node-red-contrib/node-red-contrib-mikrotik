@@ -2,7 +2,6 @@ import { NodeAPI, Node, NodeMessageInFlow } from "node-red";
 import { MikrotikDeviceNode } from "./interfaces"
 
 import { RouterOSAPI } from "node-routeros";
-import { schedulingPolicy } from "cluster";
 
 export = function (RED: NodeAPI) {
     function NodeMikrotik(this: Node, config: any) {

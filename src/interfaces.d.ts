@@ -8,6 +8,8 @@ export interface Credentials {
 export interface MikrotikDeviceConfig {
     host: string;
     port: number;
+    ssl: string
+
     /**
      * @deprecated replaced by secure usage of Credentials
      */

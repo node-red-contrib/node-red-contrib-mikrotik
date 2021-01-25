@@ -2,6 +2,7 @@ import { NodeAPI, Node, NodeMessageInFlow } from "node-red";
 import { MikrotikDeviceNode } from "./interfaces"
 
 import { RouterOSAPI } from "node-routeros";
+import { schedulingPolicy } from "cluster";
 
 export = function (RED: NodeAPI) {
     function NodeMikrotik(this: Node, config: any) {
@@ -12,6 +13,7 @@ export = function (RED: NodeAPI) {
         let deviceConfig = {
             host: device.host,
             port: device.port,
+            ssl: device.ssl,
             user: device.credentials.secusername,
             password: device.credentials.secpassword,
         };
@@ -29,7 +31,7 @@ export = function (RED: NodeAPI) {
 
         this.on('input', function (msg: NodeMessageInFlow & { command: any, success: boolean } & typeof deviceConfig) {
             // allow override of parameters through properties of the message
-            let cfg = { ...deviceConfig };
+            let cfg = { ...deviceConfig, tls: null };
             if (msg.user) cfg.user = msg.user;
             if (msg.password) cfg.password = msg.password;
             if (msg.host) cfg.host = msg.host;
@@ -39,6 +41,18 @@ export = function (RED: NodeAPI) {
             if (!msg.command) msg.command = msg.payload;
             // for compatibility reasons of old mikrotik node
             if (msg.command.command) msg.command = msg.command.command;
+
+            if (msg.ssl) cfg.ssl = msg.ssl;
+            if (cfg.ssl) {
+                if (cfg.ssl.startsWith('api-ssl'))
+                {
+                    cfg.tls = {
+                        rejectUnauthorized: cfg.ssl !== 'api-ssl-ignore-cert',
+                        ciphers: 'ADH-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384'
+                    }
+                }
+                delete cfg.ssl
+            }
 
             try {
                 connection = new RouterOSAPI(cfg);

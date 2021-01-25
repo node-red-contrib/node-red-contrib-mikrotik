@@ -37,12 +37,12 @@
   ],
   "license": "ISC",
   "dependencies": {
-    "node-routeros": "1.6.8"
+    "node-routeros": "1.6.9"
   },
   "main": "mikrotik.js",
   "devDependencies": {
     "@types/node-red": "1.1.1",
-    "typescript": "4.1.2"
+    "typescript": "4.1.3"
   },
   "repository": {
     "type": "git",

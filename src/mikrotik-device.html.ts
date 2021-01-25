@@ -8,7 +8,8 @@ RED.nodes.registerType('mikrotik-device', {
         host: { value: '192.168.0.1', required: true },
         port: { value: 8728, required: true, validate: RED.validators.number() },
         username: { value: 'admin' },
-        password: { value: '' }
+        password: { value: '' },
+        ssl: { value: 'api' }
     },
     label: function () {
         if (!!this.username)

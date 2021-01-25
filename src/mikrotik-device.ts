@@ -8,6 +8,7 @@ export = function (RED: NodeAPI) {
 
         this.host = def.host;
         this.port = def.port;
+        this.ssl = def.ssl;
 
         if ((!this.credentials) || (!this.credentials.secusername)) {
             // take care the even non "converted" credentials that

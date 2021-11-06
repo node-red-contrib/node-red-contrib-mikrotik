@@ -67,12 +67,12 @@ export = function (RED: NodeAPI) {
                         connection.close();
                     })
                     .catch((err) => {
-                        node.error('Error executing cmd[' + JSON.stringify(msg.command) + ']: ' + JSON.stringify(err));
+                        node.error('Error executing cmd[' + JSON.stringify(msg.command) + ']: ' + JSON.stringify(err), msg);
                         connection.close();
                     });
             }
             catch (err) {
-                node.error('Error: ' + JSON.stringify(err));
+                node.error('Error: ' + JSON.stringify(err), msg);
             }
         });
 

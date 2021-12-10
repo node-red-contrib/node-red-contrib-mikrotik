@@ -42,7 +42,7 @@
   "main": "mikrotik.js",
   "devDependencies": {
     "@types/node-red": "1.2.0",
-    "typescript": "4.5.2"
+    "typescript": "4.5.3"
   },
   "repository": {
     "type": "git",

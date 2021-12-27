@@ -19,6 +19,8 @@ The injected message is:
 <details>
 <summary>Click to expand the full flow!</summary>
 <pre>
+
+```
 [
     {
         "id": "34844337.ceefbc",
@@ -81,6 +83,8 @@ The injected message is:
         "wires": []
     }
 ]
+```
+
 </pre>
 </details><br>
 
@@ -97,6 +101,9 @@ The injected message is:
 <details>
 <summary>Click to expand the full flow!</summary>
 <pre>
+
+```
+
 [
     {
         "id": "4f3bd278.016564",
@@ -187,6 +194,9 @@ The injected message is:
         "wires": []
     }
 ]
+
+```
+
 </pre>
 </details><br>
 
@@ -206,6 +216,9 @@ The injected message is:
 <details>
 <summary>Click to expand the full flow!</summary>
 <pre>
+
+```
+
 [
     {
         "id": "aee77086.2d473",
@@ -280,6 +293,9 @@ The injected message is:
         ]
     }
 ]
+
+```
+
 </pre>
 </details><br>
 
@@ -296,6 +312,9 @@ The injected message is:
 <details>
 <summary>Click to expand the full flow!</summary>
 <pre>
+
+```
+
 [
     {
         "id": "8916b5a8.ece7e",
@@ -386,5 +405,8 @@ The injected message is:
         ]
     }
 ]
+
+```
+
 </pre>
 </details><br>

@@ -410,3 +410,20 @@ The injected message is:
 
 </pre>
 </details><br>
+
+## Example of disableing an Ethernet Interface! -> here ether2
+
+The injected message is:
+
+```json
+msg.payload = {
+    "command": [
+        "/interface/ethernet/set",
+        "=.id=*2",
+        "=disabled=yes"
+    ]
+}
+```
+
+</pre>
+</details><br>

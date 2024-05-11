@@ -8,3 +8,12 @@ updates:
     timezone: Europe/Berlin
   open-pull-requests-limit: 10
   target-branch: main
+
+- package-ecosystem: "github-actions"
+  open-pull-requests-limit: 100
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "08:00"
+    timezone: Europe/Berlin
+  target-branch: main

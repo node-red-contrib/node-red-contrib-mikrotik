@@ -46,7 +46,7 @@ jobs:
 
 
     - name: Update package.json for NameWith2
-      uses: jossef/action-set-json-field@v1
+      uses: jossef/action-set-json-field@v2
       with:
         file: package.json
         field: name
@@ -59,7 +59,7 @@ jobs:
         npm pack
 
     - name: Update package.json for NameWith3
-      uses: jossef/action-set-json-field@v1
+      uses: jossef/action-set-json-field@v2
       with:
         file: package.json
         field: name

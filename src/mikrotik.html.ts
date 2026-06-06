@@ -20,8 +20,8 @@ RED.nodes.registerType('mikrotik', {
     oneditprepare: function () {
         let node = this;
         $("#node-input-action").on('change', function () {
-            let cmd = node.command;
-            let newType = 'str';
+            let cmd: string = node.command;
+            let newType: string = 'str';
 
             const lookUp = ['/log/print', '/system/resource/print', '/interface/wireless/registration-table/print', '/system/reboot'];
             let value = parseInt($("#node-input-action").val() as string, 10);

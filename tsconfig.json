@@ -9,7 +9,9 @@
         "allowJs": false,
         "declaration": false,
         "sourceMap": false,
+        "skipLibCheck": true,
         "strict": false,
+        "rootDir": "./src",
         "outDir": "./nodes/",
     },
 

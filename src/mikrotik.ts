@@ -2,6 +2,28 @@ import { NodeAPI, Node, NodeMessageInFlow } from "node-red";
 import { MikrotikDeviceNode } from "./interfaces"
 
 import { RouterOSAPI } from "node-routeros";
+import { Channel } from "node-routeros/dist/Channel";
+
+function patchRouterOSEmptyReply() {
+    const channelPrototype = Channel.prototype as any;
+    if (channelPrototype.handlesRouterOSEmptyReply)
+        return;
+
+    const processPacket = channelPrototype.processPacket;
+    channelPrototype.processPacket = function (packet: string[]) {
+        // RouterOS 7.18 sends !empty before !done when a query has no records.
+        if (packet[0] === '!empty') {
+            packet.shift();
+            return;
+        }
+
+        return processPacket.call(this, packet);
+    };
+
+    channelPrototype.handlesRouterOSEmptyReply = true;
+}
+
+patchRouterOSEmptyReply();
 
 export = function (RED: NodeAPI) {
     function NodeMikrotik(this: Node, config: any) {
